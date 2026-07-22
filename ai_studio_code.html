@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Studiit — La comunidad donde estudiantes de secundaria y universidad aprenden mejor juntos." />
+  <meta name="theme-color" content="#0d0d14" />
+  <title>Studiit — Aprende con tu comunidad</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="bg-orbs" aria-hidden="true"></div>
+
+  <div class="app-shell">
+
+    <!-- ── TOP BAR ──────────────────────────────────────────── -->
+    <header class="top-bar" role="banner">
+      <div class="top-bar__logo">
+        <div class="top-bar__logo-icon" aria-hidden="true"><i class="ri-graduation-cap-fill"></i></div>
+        <span class="top-bar__logo-text">Studiit</span>
+      </div>
+      <div class="top-bar__search" role="search">
+        <i class="ri-search-line" aria-hidden="true"></i>
+        <input type="search" id="nav-search" class="top-bar__search-input" placeholder="Buscar apuntes, dudas, métodos..." autocomplete="off"
+          aria-label="Buscar en Studiit" data-i18n-placeholder="search.placeholder" />
+      </div>
+    </header>
+
+    <!-- ── CONTENIDO PRINCIPAL ───────────────────────────────── -->
+    <div class="app-content" id="app-content">
+
+      <!-- ══════════ FEED ══════════ -->
+      <section id="section-feed" class="app-section">
+        <div class="section-header">
+          <h1 class="section-header__title" data-i18n="section.feed.title">🔥 Trending ahora</h1>
+          <p class="section-header__sub" data-i18n="section.feed.sub">Lo más popular de la comunidad</p>
+        </div>
+        
+        <div class="section-filters" role="tablist" aria-label="Filtro de feed">
+          <button class="feed__filter feed__filter--active" role="tab" aria-selected="true" id="filter-hot">
+            <i class="ri-fire-line"></i> Populares
+          </button>
+          <button class="feed__filter" role="tab" aria-selected="false" id="filter-new">
+            <i class="ri-sparkling-fill"></i> Recientes
+          </button>
+          <button class="feed__filter" role="tab" aria-selected="false" id="filter-top">
+            <i class="ri-trophy-line"></i> Más Votados
+          </button>
+        </div>
+
+        <div id="feed-list" class="feed-list">
+          <!-- Renderizado dinámicamente con JS -->
+        </div>
+
+        <button class="load-more-btn" id="btn-load-more">
+          <i class="ri-refresh-line"></i> Cargar más publicaciones
+        </button>
+      </section>
+
+      <!-- ══════════ APUNTES ══════════ -->
+      <section id="section-apuntes" class="app-section section--hidden">
+        <div class="section-header">
+          <h1 class="section-header__title" data-i18n="section.apuntes.title">📚 Banco de Apuntes</h1>
+          <p class="section-header__sub" data-i18n="section.apuntes.sub">PDFs y esquemas compartidos por estudiantes</p>
+        </div>
+        <div class="section-filters" role="tablist">
+          <button class="filter-pill filter-pill--active">Todos</button>
+          <button class="filter-pill">Matematicas</button>
+          <button class="filter-pill">Fisica</button>
+          <button class="filter-pill">Quimica</button>
+          <button class="filter-pill">Historia</button>
+          <button class="filter-pill">Programacion</button>
+        </div>
+        <div class="apuntes-grid" id="apuntes-grid"></div>
+        <div class="section-fab-space"></div>
+      </section>
+
+      <!-- ══════════ MÉTODOS ══════════ -->
+      <section id="section-metodos" class="app-section section--hidden">
+        <div class="section-header">
+          <h1 class="section-header__title" data-i18n="section.metodos.title">🧠 Métodos de Estudio</h1>
+          <p class="section-header__sub" data-i18n="section.metodos.sub">Técnicas interactivas con herramientas integradas</p>
+        </div>
+        <div class="metodos-grid" id="metodos-grid"></div>
+        <div class="section-fab-space"></div>
+      </section>
+
+      <!-- ══════════ FORO Q&A ══════════ -->
+      <section id="section-foro" class="app-section section--hidden">
+        <div class="section-header">
+          <h1 class="section-header__title" data-i18n="section.foro.title">💬 Foro Q&A</h1>
+          <p class="section-header__sub" data-i18n="section.foro.sub">Pregunta y resuelve dudas con explicaciones paso a paso</p>
+        </div>
+        <div class="section-filters" role="tablist">
+          <button class="filter-pill filter-pill--active">Todas</button>
+          <button class="filter-pill">Resueltas</button>
+          <button class="filter-pill">Abiertas</button>
+          <button class="filter-pill">Hot</button>
+        </div>
+        <div class="foro-list" id="foro-list"></div>
+        <div class="section-fab-space"></div>
+      </section>
+
+      <!-- ══════════ PERFIL ══════════ -->
+      <section id="section-perfil" class="app-section section--hidden">
+        <div class="profile-hero">
+          <div class="profile-hero__avatar" id="profile-avatar-display">
+            <span id="profile-initials">ES</span>
+          </div>
+          <div class="profile-hero__info">
+            <h1 class="profile-hero__name" id="profile-name-display">Estudiante</h1>
+            <p class="profile-hero__sub" id="profile-hero-sub" data-i18n="profile.sub">Estudiante de Studiit</p>
+            <div class="profile-xp-container">
+              <div class="profile-xp-bar-wrapper">
+                <div class="profile-xp-bar" id="profile-xp-progress"></div>
+              </div>
+              <div class="profile-xp-text">
+                <span id="profile-xp-current">0 XP</span>
+                <span id="profile-xp-next">100 XP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-block">
+          <h2 class="profile-block__title" data-i18n="profile.name">✏️ Mi Nombre</h2>
+          <div class="profile-edit-row">
+            <input class="modal__input" type="text" id="profile-username-input" placeholder="Tu nombre o alias..." maxlength="20" autocomplete="off" />
+            <button class="profile-save-btn" id="btn-save-username">Guardar</button>
+          </div>
+        </div>
+
+        <div class="profile-block">
+          <h2 class="profile-block__title" data-i18n="profile.color">🎨 Color de mi avatar</h2>
+          <div class="color-picker" id="color-picker" role="group" aria-label="Elige un color">
+            <button class="color-swatch color-swatch--violet color-swatch--active" data-color="violet" aria-label="Morado"></button>
+            <button class="color-swatch color-swatch--cyan" data-color="cyan" aria-label="Cian"></button>
+            <button class="color-swatch color-swatch--amber" data-color="amber" aria-label="Ámbar"></button>
+            <button class="color-swatch color-swatch--pink" data-color="pink" aria-label="Rosa"></button>
+            <button class="color-swatch color-swatch--green" data-color="green" aria-label="Verde"></button>
+            <button class="color-swatch color-swatch--dark" data-color="dark" aria-label="Oscuro"></button>
+          </div>
+        </div>
+
+        <div class="profile-block">
+          <h2 class="profile-block__title" data-i18n="profile.theme">🌓 Apariencia</h2>
+          <div class="theme-picker" id="theme-picker">
+            <button class="theme-btn theme-btn--active" data-theme="dark" id="theme-dark">
+              <span class="theme-btn__icon">🌙</span>
+              <span class="theme-btn__name" data-i18n="theme.dark">Oscuro</span>
+            </button>
+            <button class="theme-btn" data-theme="light" id="theme-light">
+              <span class="theme-btn__icon">☀️</span>
+              <span class="theme-btn__name" data-i18n="theme.light">Claro</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-block">
+          <h2 class="profile-block__title" data-i18n="profile.lang">🌍 Idioma</h2>
+          <div class="lang-picker" id="lang-picker">
+            <button class="lang-btn lang-btn--active" data-lang="es" id="lang-es">
+              <span class="lang-btn__flag">🇪🇸</span>
+              <span class="lang-btn__name">Español</span>
+            </button>
+            <button class="lang-btn" data-lang="en" id="lang-en">
+              <span class="lang-btn__flag">🇬🇧</span>
+              <span class="lang-btn__name">English</span>
+            </button>
+            <button class="lang-btn" data-lang="fr" id="lang-fr">
+              <span class="lang-btn__flag">🇫🇷</span>
+              <span class="lang-btn__name">Français</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-block">
+          <h2 class="profile-block__title" data-i18n="profile.stats">🏆 Mis Estadísticas</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-card__num" id="stat-posts">0</span>
+              <span class="stat-card__label" data-i18n="stat.posts">Publicaciones</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card__num" id="stat-votes">0</span>
+              <span class="stat-card__label" data-i18n="stat.votes">Votos dados</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card__num" id="stat-level">🌟 1</span>
+              <span class="stat-card__label" data-i18n="stat.level">Nivel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-block">
+          <h2 class="profile-block__title" data-i18n="profile.achievements">🥇 Logros Desbloqueados</h2>
+          <div class="achievements-list" id="achievements-list"></div>
+        </div>
+
+        <div class="section-fab-space"></div>
+      </section>
+
+    </div>
+
+    <!-- ── BOTÓN FLOTANTE NUEVA PUBLICACIÓN ────────────────── -->
+    <button class="fab" id="btn-new-post" aria-label="Nueva publicación">
+      <i class="ri-add-line"></i>
+    </button>
+
+    <!-- ── NAVEGACIÓN INFERIOR / LATERAL ────────────────────── -->
+    <nav class="bottom-nav" role="navigation" id="main-nav">
+      <a href="#" class="bottom-nav__item bottom-nav__item--active" data-section="feed">
+        <i class="ri-fire-line"></i><span data-i18n="nav.feed">Inicio</span>
+      </a>
+      <a href="#" class="bottom-nav__item" data-section="apuntes">
+        <i class="ri-book-open-line"></i><span data-i18n="nav.apuntes">Apuntes</span>
+      </a>
+      <a href="#" class="bottom-nav__item" data-section="metodos">
+        <i class="ri-brain-line"></i><span data-i18n="nav.metodos">Métodos</span>
+      </a>
+      <a href="#" class="bottom-nav__item" data-section="foro">
+        <i class="ri-question-answer-line"></i><span data-i18n="nav.foro">Foro</span>
+      </a>
+      <a href="#" class="bottom-nav__item" data-section="perfil">
+        <i class="ri-user-line"></i><span data-i18n="nav.perfil">Perfil</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ── MODAL: NUEVA PUBLICACIÓN ─────────────────────────── -->
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true"></div>
+  <div class="modal" id="modal-new-post" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal__header">
+      <button class="modal__close" id="modal-close" aria-label="Cerrar"><i class="ri-arrow-left-line"></i></button>
+      <h2 class="modal__title" id="modal-title">Nueva Publicación</h2>
+      <div style="width:38px"></div>
+    </div>
+
+    <form class="modal__form" id="form-new-post" novalidate>
+      <div class="modal__field">
+        <label class="modal__label">¿Qué vas a publicar?</label>
+        <div class="modal__type-chips">
+          <label class="type-chip type-chip--active">
+            <input type="radio" name="tipo_radio" value="metodo" checked hidden /> 🧠 Método
+          </label>
+          <label class="type-chip">
+            <input type="radio" name="tipo_radio" value="apunte" hidden /> 📚 Apunte
+          </label>
+          <label class="type-chip">
+            <input type="radio" name="tipo_radio" value="pregunta" hidden /> 💬 Pregunta
+          </label>
+        </div>
+        <select class="modal__select--hidden" id="post-tipo" name="tipo">
+          <option value="metodo">Método de estudio</option>
+          <option value="apunte">Apunte / PDF</option>
+          <option value="pregunta">Pregunta Foro</option>
+        </select>
+      </div>
+
+      <div class="modal__field">
+        <label class="modal__label" for="post-tag">Materia / Categoría</label>
+        <select class="modal__select" id="post-tag" name="tag">
+          <option value="General">General</option>
+          <option value="Matematicas">Matemáticas</option>
+          <option value="Fisica">Física</option>
+          <option value="Quimica">Química</option>
+          <option value="Historia">Historia</option>
+          <option value="Programacion">Programación</option>
+          <option value="Calculo">Cálculo</option>
+          <option value="Active Recall">Active Recall</option>
+          <option value="Pomodoro">Pomodoro</option>
+        </select>
+      </div>
+
+      <div class="modal__field">
+        <label class="modal__label" for="post-titulo">Título <span class="modal__required">*</span></label>
+        <input class="modal__input" type="text" id="post-titulo" name="titulo" placeholder="Escribe un título claro..." maxlength="150" autocomplete="off" required />
+      </div>
+
+      <div class="modal__field modal__field--grow">
+        <label class="modal__label" for="post-contenido">Contenido / Explicación <span class="modal__required">*</span></label>
+        <textarea class="modal__textarea" id="post-contenido" name="contenido" placeholder="Detalla tu método, duda o resumen..." rows="5" maxlength="2000" required></textarea>
+      </div>
+
+      <div class="modal__field modal__file-section" id="apunte-file-section" style="display:none">
+        <label class="modal__label">📎 Adjuntar archivo (PDF o Imagen)</label>
+        <label class="file-drop" id="file-drop-label" for="post-archivo">
+          <i class="ri-upload-cloud-2-line file-drop__icon"></i>
+          <span class="file-drop__text" id="file-drop-text">Toca para seleccionar tu archivo PDF</span>
+          <span class="file-drop__hint">Máximo 10 MB</span>
+          <input type="file" id="post-archivo" accept="image/*,application/pdf" hidden />
+        </label>
+      </div>
+
+      <div class="modal__field modal__file-section" id="apunte-link-section" style="display:none">
+        <label class="modal__label" for="post-link">🔗 O enlace externo <span class="modal__optional">Opcional</span></label>
+        <input class="modal__input" type="url" id="post-link" name="link" placeholder="https://drive.google.com/..." autocomplete="off" />
+      </div>
+
+      <div class="modal__actions">
+        <button type="button" class="modal__cancel-btn" id="modal-cancel">Cancelar</button>
+        <button type="submit" class="modal__submit-btn"><i class="ri-send-plane-fill"></i> Publicar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ── MODAL: DETALLES DE POST Y COMENTARIOS ──────────── -->
+  <div class="modal-overlay" id="modal-post-detail-overlay" aria-hidden="true"></div>
+  <div class="modal" id="modal-post-detail" role="dialog" aria-modal="true" aria-labelledby="post-detail-title">
+    <div class="modal__header">
+      <button class="modal__close" id="modal-post-detail-close" aria-label="Cerrar"><i class="ri-arrow-left-line"></i></button>
+      <h2 class="modal__title" id="post-detail-title">Publicación</h2>
+      <div style="width:38px"></div>
+    </div>
+    <div class="modal__form" style="overflow-y:auto; padding:20px;">
+      <div id="post-detail-container"></div>
+      <div class="comments-section">
+        <h3 class="comments-section__title" id="comments-count-title">Comentarios (0)</h3>
+        <div id="comments-list" class="comments-list"></div>
+        <form id="form-new-comment" class="new-comment-form">
+          <textarea class="modal__textarea" id="comment-content" placeholder="Añade un comentario respetuoso..." rows="3" required></textarea>
+          <button type="submit" class="btn btn--primary" style="margin-top:10px; width:100%;">Enviar comentario</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: POMODORO TIMER ───────────────────────────── -->
+  <div class="modal-overlay" id="modal-pomodoro-overlay" aria-hidden="true"></div>
+  <div class="modal" id="modal-pomodoro" role="dialog" aria-modal="true" aria-labelledby="pomodoro-title">
+    <div class="modal__header">
+      <button class="modal__close" id="modal-pomodoro-close" aria-label="Cerrar"><i class="ri-close-line"></i></button>
+      <h2 class="modal__title" id="pomodoro-title">Temporizador Pomodoro</h2>
+      <div style="width:38px"></div>
+    </div>
+    <div class="modal__form" style="align-items:center; text-align:center; padding:30px 20px; display:flex; flex-direction:column; gap:16px;">
+      <div class="pomodoro-timer-container">
+        <svg class="pomodoro-ring" width="200" height="200">
+          <circle class="pomodoro-ring__circle-bg" stroke="#1a1a2a" stroke-width="8" fill="transparent" r="85" cx="100" cy="100" />
+          <circle class="pomodoro-ring__circle" id="pomodoro-progress" stroke="var(--neon-purple)" stroke-width="8" fill="transparent" r="85" cx="100" cy="100" />
+        </svg>
+        <div class="pomodoro-timer__time" id="pomodoro-time">25:00</div>
+      </div>
+      <div class="pomodoro-status" id="pomodoro-status">Tiempo de Concentración</div>
+      <div class="pomodoro-controls" style="display:flex; gap:10px;">
+        <button class="btn btn--primary" id="pomodoro-btn-start"><i class="ri-play-fill"></i> Iniciar</button>
+        <button class="btn btn--ghost" id="pomodoro-btn-reset"><i class="ri-restart-line"></i> Reiniciar</button>
+      </div>
+      <div class="pomodoro-stats" style="margin-top:10px; font-size:0.8rem; color:var(--text-muted);">
+        Sesiones completadas hoy: <span id="pomodoro-count">0</span> (+100 XP por ciclo)
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: FLASHCARDS ACTIVE RECALL ────────────────── -->
+  <div class="modal-overlay" id="modal-flashcards-overlay" aria-hidden="true"></div>
+  <div class="modal" id="modal-flashcards" role="dialog" aria-modal="true" aria-labelledby="flashcards-title">
+    <div class="modal__header">
+      <button class="modal__close" id="modal-flashcards-close" aria-label="Cerrar"><i class="ri-close-line"></i></button>
+      <h2 class="modal__title" id="flashcards-title">Active Recall Flashcards</h2>
+      <div style="width:38px"></div>
+    </div>
+    <div class="modal__form" style="align-items:center; padding:20px; display:flex; flex-direction:column; gap:16px;">
+      <div class="flashcard-deck-progress">Tarjeta <span id="flashcard-current-num">1</span> de <span id="flashcard-total-num">5</span></div>
+      <div class="flashcard-container" id="flashcard-box">
+        <div class="flashcard">
+          <div class="flashcard__face flashcard__face--front">
+            <div class="flashcard__materia" id="flashcard-materia">Física</div>
+            <div class="flashcard__question" id="flashcard-question">Pregunta de ejemplo</div>
+            <div class="flashcard__hint">Toca para voltear y ver respuesta</div>
+          </div>
+          <div class="flashcard__face flashcard__face--back">
+            <div class="flashcard__answer" id="flashcard-answer">Respuesta de ejemplo</div>
+            <div class="flashcard__evaluation" style="margin-top: 15px; text-align: center;">
+              <p style="font-size:0.82rem; margin-bottom:10px; color:var(--text-secondary);">¿Qué tan bien lo recordaste?</p>
+              <div class="evaluation-btns" style="display:flex; gap:8px; justify-content:center;">
+                <button class="btn btn--sm eval-btn" data-eval="hard" style="background:rgba(236,72,153,0.15); color:#f9a8d4; border-color:rgba(236,72,153,0.4)">Difícil</button>
+                <button class="btn btn--sm eval-btn" data-eval="medium" style="background:rgba(245,158,11,0.15); color:#fcd34d; border-color:rgba(245,158,11,0.4)">Normal</button>
+                <button class="btn btn--sm eval-btn" data-eval="easy" style="background:rgba(16,185,129,0.15); color:#6ee7b7; border-color:rgba(16,185,129,0.4)">Fácil</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+
+</html>
